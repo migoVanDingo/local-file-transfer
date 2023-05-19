@@ -6,7 +6,7 @@ global.__basedir = __dirname
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://ec2-44-211-168-222.compute-1.amazonaws.com:3000",
   })
 )
 app.use((req,res,next)=>{
