@@ -2,7 +2,7 @@ const uploadFile = require("../middleware/upload")
 const fs = require("fs")
 const xlsx = require("xlsx")
 
-const num = 3
+const num = 101
 
 const upload = async (req, res) => {
   try {
@@ -30,31 +30,57 @@ const upload = async (req, res) => {
     })
   }
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////
 const convertXlsx = (req, res) => {
   //Extract the data from the xlsx file
+  const projectId = req.params.projectId
   function getDataXlsx() {
-    let file 
+    let file
+    let fileArr = []
 
-    switch(num){
-        case 1:
-            file = xlsx.readFile(
-                "/Users/bubz/Developer/master-project/local-file-transfer/uploads/talking_instances.xlsx"
-              )
-            break;
+    switch (num) {
+      case 1:
+        file = xlsx.readFile(
+          "/Users/bubz/Developer/master-project/local-file-transfer/uploads/talking_instances.xlsx"
+        )
+        break
 
-        case 3:
-            file = xlsx.readFile(
-                "/Users/bubz/Developer/master-project/local-file-transfer/uploads/ivonne-typing/ivone-typing.xlsx"
-              )
-            break;
+      case 3:
+        file = xlsx.readFile(
+          "/Users/bubz/Developer/master-project/local-file-transfer/uploads/ivonne-typing/ivone-typing.xlsx"
+        )
+        break
 
-        default:
-            break;
+      case 101:
+        
+        getFiles = fs.readdir(
+          "/Users/bubz/Developer/master-project/aolme-backend/project/" +
+            projectId +
+            "/ground-truth-raw",
+          (err, files) => {
+            if(err)
+              console.error("It didn't work: ", err)
+              fileArr.push(files.map(file => file))
+          }
+        )
+        
+        file = xlsx.readFile(
+          "/Users/bubz/Developer/master-project/aolme-backend/project/" +
+            projectId +
+            "/ground-truth-raw/gt-ty-30fps.xlsx")
+        
+
+        break
+
+      default:
+        break
     }
 
+    
+   
     const sheetNames = file.SheetNames
     const totalSheets = sheetNames.length
+    console.log("totalSheets: ", totalSheets)
 
     let parsedData = []
 
@@ -113,8 +139,6 @@ const convertXlsx = (req, res) => {
       const s1 = Object.create(sequence)
       const s2 = Object.create(sequence)
 
-      
-
       s1.x = (row.w0 / row.W) * 100
       s1.y = (row.h0 / row.H) * 100
       s1.width = (row.w / row.W) * 100
@@ -124,8 +148,7 @@ const convertXlsx = (req, res) => {
       s1.enabled = true
       s1.time = row.f0 / row.FPS
 
-      if(s1.frame === 0)
-      {
+      if (s1.frame === 0) {
         s1.frame = 1
       }
 
@@ -145,9 +168,12 @@ const convertXlsx = (req, res) => {
   }
 
   function buildValueObject(sequence, label) {
+
+
+
     const value = {
-      framesCount: 24212,
-      duration: 968.4675,
+      framesCount: 42763,
+      duration: 1425.424,
       labels: [label],
       sequence: sequence,
     }
@@ -171,22 +197,35 @@ const convertXlsx = (req, res) => {
       Carmen: "P48aNXok3p",
       Marina: "HenVUsL3rj",
       Marta: "p3gsB9CNU5",
-      Sylvia:"abc12345",
+      Sylvia: "abc12345",
       Barraza: "xyz98766",
-      Anthony: "nop5329761"
+      Anthony: "nop5329761",
     }
 
     const idArr3 = {
-        Katiana: "Dj0wOASaz3",
-        Maya: "kgSrfSyBWC",
-        Marcia: "7KDXRsxp8Y",
-        Jacob: "iH8NUxGPBR"
-
+      Katiana: "Dj0wOASaz3",
+      Maya: "kgSrfSyBWC",
+      Marcia: "7KDXRsxp8Y",
+      Jacob: "iH8NUxGPBR",
+    }
+    function makeid(length) {
+      let result = ""
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+      const charactersLength = characters.length
+      let counter = 0
+      while (counter < length) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        )
+        counter += 1
+      }
+      return result
     }
 
-    let id 
-    
-    switch(num){
+    let id = makeid(10)
+
+    /* switch(num){
         case 1:
             id = idArr[label]
             break;
@@ -201,9 +240,7 @@ const convertXlsx = (req, res) => {
 
         default:
             break
-    }
-
-    
+    } */
 
     const resultElement = {
       id: id,
@@ -238,62 +275,99 @@ const convertXlsx = (req, res) => {
   function createTaskArray(annotations, index) {
     let video
 
-    if(num === 1){
-        switch (index) {
-            case 0:
-              video = "/data/upload/30/bd1ea630-G-C1L1P-Apr13-C-Windy_q2_01-07.mp4"
-              break
-      
-            case 1:
-              video = "/data/upload/30/e5fbc3dd-G-C1L1P-Apr13-C-Windy_q2_02-07.mp4"
-              break
-      
-            case 2:
-              video = "/data/upload/30/0a0cbfc9-G-C1L1P-Apr13-C-Windy_q2_03-07.mp4"
-              break
-      
-            case 3:
-              video = "/data/upload/30/1ead0ba6-G-C1L1P-Apr13-C-Windy_q2_04-07.mp4"
-              break
-      
-            case 4:
-              video = "/data/upload/30/fc9fbcb1-G-C1L1P-Apr13-C-Windy_q2_05-07.mp4"
-              break
-      
-            case 5:
-              video = "/data/upload/30/31c1cd68-G-C1L1P-Apr13-C-Windy_q2_06-07.mp4"
-              break
-      
-            case 6:
-              video = "/data/upload/30/3bd7c439-G-C1L1P-Apr13-C-Windy_q2_07-07.mp4"
-              break
-          }
+    if (num === 1) {
+      switch (index) {
+        case 0:
+          video = "/data/upload/30/bd1ea630-G-C1L1P-Apr13-C-Windy_q2_01-07.mp4"
+          break
+
+        case 1:
+          video = "/data/upload/30/e5fbc3dd-G-C1L1P-Apr13-C-Windy_q2_02-07.mp4"
+          break
+
+        case 2:
+          video = "/data/upload/30/0a0cbfc9-G-C1L1P-Apr13-C-Windy_q2_03-07.mp4"
+          break
+
+        case 3:
+          video = "/data/upload/30/1ead0ba6-G-C1L1P-Apr13-C-Windy_q2_04-07.mp4"
+          break
+
+        case 4:
+          video = "/data/upload/30/fc9fbcb1-G-C1L1P-Apr13-C-Windy_q2_05-07.mp4"
+          break
+
+        case 5:
+          video = "/data/upload/30/31c1cd68-G-C1L1P-Apr13-C-Windy_q2_06-07.mp4"
+          break
+
+        case 6:
+          video = "/data/upload/30/3bd7c439-G-C1L1P-Apr13-C-Windy_q2_07-07.mp4"
+          break
+      }
     } else {
-        switch (index) {
-            case 0:
-              video = "/data/upload/31/0f94a9d5-G-C3L1P-Feb21-D-Ivonne_q2_01-05.mp4"
-              break
-      
-            case 1:
-              video = "/data/upload/31/55f9af10-G-C3L1P-Feb21-D-Ivonne_q2_02-05.mp4"
-              break
-      
-            case 2:
-              video = "/data/upload/31/26f534c9-G-C3L1P-Feb21-D-Ivonne_q2_03-05.mp4"
-              break
-      
-            case 3:
-              video = "/data/upload/31/234b0bdc-G-C3L1P-Feb21-D-Ivonne_q2_04-05.mp4"
-              break
-      
-            case 4:
-              video = "/data/upload/31/04072f67-G-C3L1P-Feb21-D-Ivonne_q2_05-05.mp4"
-              break
-      
-          }
+      switch (index) {
+        case 0:
+          video = "/data/upload/31/0f94a9d5-G-C3L1P-Feb21-D-Ivonne_q2_01-05.mp4"
+          break
+
+        case 1:
+          video = "/data/upload/31/55f9af10-G-C3L1P-Feb21-D-Ivonne_q2_02-05.mp4"
+          break
+
+        case 2:
+          video = "/data/upload/31/26f534c9-G-C3L1P-Feb21-D-Ivonne_q2_03-05.mp4"
+          break
+
+        case 3:
+          video = "/data/upload/31/234b0bdc-G-C3L1P-Feb21-D-Ivonne_q2_04-05.mp4"
+          break
+
+        case 4:
+          video = "/data/upload/31/04072f67-G-C3L1P-Feb21-D-Ivonne_q2_05-05.mp4"
+          break
+      }
     }
 
-    
+    if (num === 101) {
+      switch (index) {
+        case 0:
+          video =
+            "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/project/" +
+            projectId +
+            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_02-06.mp4"
+          break
+
+        case 1:
+          video =
+            "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/project/" +
+            projectId +
+            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_03-06.mp4"
+          break
+
+        case 2:
+          video =
+            "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/project/" +
+            projectId +
+            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_04-06.mp4"
+          break
+
+        case 3:
+          video =
+            "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/project/" +
+            projectId +
+            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_05_06.mp4"
+          break
+
+        case 4:
+          video =
+            "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/project/" +
+            projectId +
+            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_06-06.mp4"
+          break
+      }
+    }
+
     const task = {
       data: {
         video: video,
@@ -325,23 +399,27 @@ const convertXlsx = (req, res) => {
     return rows
   }
 
+  console.log("here 1")
   const xlFile = getDataXlsx()
+  console.log("here 2")
   const uniqueVideos = getUniqueVideos(xlFile)
   //const uniqueLabels = getUniqueLabels(xlFile)
-
+  console.log("here 3")
   const videoRows = uniqueVideos.map((video) => getVideoRows(video, xlFile))
-
+  console.log("here 4")
   const uniqueLabelsArr = videoRows.map((row) => getUniqueLabels(row))
-
+  console.log("here 5")
   //Each row is all entries for a given video. Sorted by pseudonym
   const labelRows = uniqueLabelsArr.map((uniqueLabels, index) =>
     uniqueLabels.map((label) => collectLabelRows(label, videoRows[index]))
   )
+  console.log("here 6")
   const labelSequence = labelRows.map((row, index) => {
     //each row is a file, each child of row is a pseudonym
     //So we need to loop through the file and build the labelSequence for each pseudonym for every file
     return row.map((pn) => buildLabelSequence(pn))
   })
+  console.log("here 7")
 
   const result = labelSequence.map((allFileSequences, index) => {
     return allFileSequences.map((sequence, childIndex) =>
@@ -349,17 +427,27 @@ const convertXlsx = (req, res) => {
     )
   })
 
+  console.log("here 8")
   const annotations = result.map((res, index) => createAnnotationsObject(res))
-  const tasks = annotations.map((annotation, index) => createTaskArray(annotation, index))
+  console.log("here 9")
+  const tasks = annotations.map((annotation, index) =>
+    createTaskArray(annotation, index)
+  )
+  console.log("here 10")
 
-  const uploadedFile = tasks.map((task, index) => createFile(task, uniqueVideos[index]))
+  const uploadedFile = tasks.map((task, index) =>
+    createFile(task, uniqueVideos[index], projectId)
+  )
   console.log(uniqueLabelsArr)
+  console.log("here 11")
 
   return res.status(200).send(JSON.stringify(uniqueLabelsArr))
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const getListFiles = (req, res) => {
-  const directoryPath = __basedir + "/uploads/"
+  const directoryPath = __basedir + "/project/"
 
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
@@ -383,7 +471,7 @@ const getListFiles = (req, res) => {
 
 const download = (req, res) => {
   const fileName = req.params.name
-  const directoryPath = __basedir + "/uploads/"
+  const directoryPath = __basedir + "/project/"
 
   res.download(directoryPath + fileName, fileName, (err) => {
     if (err) {
@@ -394,12 +482,18 @@ const download = (req, res) => {
   })
 }
 
-const createFile = (data,filename) => {
-    const file = filename.split(".")
+const createFile = (data, filename, projectId) => {
+  const file = filename.split(".")
 
   data = JSON.stringify(data)
-  const path =
-    "/Users/bubz/Developer/master-project/local-file-transfer/uploads/"+file[0]+".json"
+  /* const path =
+    "/Users/bubz/Developer/master-project/local-file-transfer/uploads/" +
+    file[0] +
+    ".json" */
+
+    const path = "/Users/bubz/Developer/master-project/aolme-backend/project/" +
+    projectId +
+    "/ground-truth-reformat/"+file[0]+".json" 
   fs.writeFile(path, data, (err) => {
     if (err) {
       console.error(err)
