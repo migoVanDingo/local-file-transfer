@@ -16,6 +16,8 @@ let routes = (app) => {
     router.get('/local-storage/:projectId', FileManager.createLocalStorage)
     router.get('/local-storage/:projectId/move', FileManager.moveFilesToLocalStorage)
 
+    router.get('/convert/v2/xlsx', controller.convertXlsx)
+
     app.use(router)
 }
 
