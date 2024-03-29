@@ -2,7 +2,7 @@ const uploadFile = require("../middleware/upload")
 const fs = require("fs")
 const xlsx = require("xlsx")
 
-const num = 20170330
+const num = 20190221
 
 const upload = async (req, res) => {
   try {
@@ -281,13 +281,132 @@ const convertXlsx = (req, res) => {
     return labelSequence
   }
 
-  function buildValueObject(sequence, label) {
+  function buildValueObject(sequence, label, index) {
 
+    let frames = 0
+    let duration = 0
+    switch(num){
+      case 20170330:
+        if(index === 0){
+          frames = 57930
+          duration = 966.4655
+        } else if (index === 1){
+          frames = 57930
+          duration = 966.4655
+        } else if (index === 2){
+          frames = 57930
+          duration = 966.4655
+        } else if (index === 3){
+          frames = 57930
+          duration = 966.4655
+        } else if (index === 4){
+          frames = 57930
+          duration = 966.4655
+        } else if (index === 5){
+          frames = 56460
+          duration = 941.9410
+        }
+    
+        break
+
+      case 20170413:
+        if(index === 0){
+          frames = 57990
+          duration = 967.4665
+        } else if (index === 1){
+          frames = 58020
+          duration = 967.9670
+        } else if (index === 2){
+          frames = 58020
+          duration = 967.9670
+        } else if (index === 3){
+          frames = 23820
+          duration = 397.3970
+        } 
+        break;
+
+      case 20170302:
+        if(index === 0){
+          frames = 24504
+          duration = 816.800000
+        } else if (index === 1){
+          frames = 24502
+          duration = 816.733333
+        } else if (index === 2){
+          frames = 9
+          duration = 0.300000
+        }
+        break;
+
+      case 20180223:
+        if(index === 0){
+          frames = 42720
+          duration = 1425.424
+        } else if (index === 1){
+          frames = 42720
+          duration = 1425.424
+        } else if (index === 2){
+          frames = 42720
+          duration = 1425.424
+        } else if (index === 3){
+          frames = 42720
+          duration = 1425.424
+        } else if (index === 4){
+          frames = 11790
+          duration = 393.393
+        } 
+        break;
+
+      case 20180308:
+        if(index === 0){
+          frames = 42720
+          duration = 1425.4240
+        } else if (index === 1){
+          frames = 42720
+          duration = 1425.4240
+        } else if (index === 2){
+          frames = 42720
+          duration = 1425.4240
+        } else if (index === 3){
+          frames = 20715
+          duration = 691.1905
+        } 
+        break;
+
+      case 20190411:
+        if(index === 0){
+          frames = 42720
+          duration = 1425.424
+        } else if (index === 1){
+          frames = 42720
+          duration = 1425.424
+        } 
+        break;
+
+      case 20190221:
+        if(index === 0){
+          frames = 42735
+          duration = 1425.9245
+        } else if (index === 1){
+          frames = 42735
+          duration = 1425.9245
+        } else if (index === 2){
+          frames = 42735
+          duration = 1425.9245
+        } else if (index === 3){
+          frames = 42735
+          duration = 1425.9245
+        } else if (index === 4){
+          frames = 19890
+          duration = 663.6630
+        } 
+        break;
+    }
 
 
     const value = {
-      framesCount: 42763,
-      duration: 1425.424,
+      framesCount: frames,
+      duration: duration,
       labels: [label],
       sequence: sequence,
     }
@@ -724,7 +843,7 @@ const convertXlsx = (req, res) => {
   console.log("here 10")
 
   const uploadedFile = tasks.map((task, index) =>
-    createFile(task, uniqueVideos[index], projectId)
+    createFile(task, uniqueVideos[index])
   )
   console.log(uniqueLabelsArr)
   console.log("here 11")
@@ -770,7 +889,7 @@ const download = (req, res) => {
   })
 }
 
-const createFile = (data, filename, projectId) => {
+const createFile = (data, filename) => {
   const file = filename.split(".")
 
   data = JSON.stringify(data)
