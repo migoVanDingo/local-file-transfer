@@ -3,21 +3,22 @@ const path = require("path")
 
 function createLocalStorage(req, res) {
   const projectId = req.params.projectId
+  const repoId = req.params.repoId
 
-  const dir =
-    "/Users/bubz/Developer/master-project/aolme-backend/project/" + projectId
+  const dir ="/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/" + repoId + "/local-storage"
 
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir)
-  }
-  const dir2 =
-    "/Users/bubz/Developer/master-project/aolme-backend/project/" +
-    projectId +
-    "/local-storage"
+  console.log("LOG: local storage created: ", dir)
 
-  fs.mkdirSync(dir2)
+  fs.mkdirSync(dir)
+  // if (!fs.existsSync(dir)) {
+  //   fs.mkdirSync(dir)
+  // }
+  // const dir2 =
+  //   "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/local-storage"
 
-  console.log("LOG: local storage created: ", projectId)
+  // fs.mkdirSync(dir2)
+
+  console.log("LOG: local storage created: ", dir)
 
   res.status(200).send({ local_storage_directory: dir })
 }
@@ -26,8 +27,10 @@ function moveFilesToLocalStorage(req, res) {
   console.log("here guy")
   try {
     console.log("Start Move Files to Local Storage: ", req.params.projectId)
+    console.log("Start Move Files to Local Storage rid: ", req.params.repoId)
+
     //const destinationFolder = moveGroundTruthFiles(req.params.projectId)
-    const destinationFolder = moveVideoFiles(req.params.projectId)
+    const destinationFolder = moveVideoFiles(req.params.projectId, req.params.repoId)
     res.status(200).send(JSON.stringify({ destination: destinationFolder }))
   } catch (error) {
     console.error(error)
@@ -83,17 +86,22 @@ function moveGroundTruthFiles(projectId) {
   }
 }
 
-function moveVideoFiles(projectId) {
+function moveVideoFiles(projectId, repoId) {
   try {
     console.log("moveVideoFiles()")
-    const sourceFolder =
+    /* const sourceFolder =
       "/Users/bubz/Developer/master-project/aolme-backend/project/" +
       projectId +
       "/videos" // Source folder
     const destinationFolder =
       "/Users/bubz/Developer/master-project/aolme-backend/project/" +
       projectId +
-      "/local-storage" // Destination folder
+      "/local-storage" // Destination folder */
+    const sourceFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/videos" // Source folder  
+    
+    const destinationFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage" // Destination folder
+    
+    
 
     // Read the list of files in the source folder
     const files = fs.readdir(sourceFolder, (err, files) => {
