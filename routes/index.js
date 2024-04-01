@@ -8,7 +8,7 @@ const FileManager = require('../services/file-manager/FileManager')
 let routes = (app) => {
     router.post("/upload", controller.upload)
     router.post("/convert/xlsx", controller.convertXlsx)
-    router.get("/convert/xlsx/:project_id/:file_set_id", controller.convertXlsx)
+    router.get("/convert/xlsx/:repo_id/:file_set_id", controller.convertXlsx)
     router.get("/files", controller.getListFiles)
     router.get("/files/:name", controller.download)
     router.get('/health-check', util.healthCheck)

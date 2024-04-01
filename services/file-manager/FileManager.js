@@ -9,10 +9,10 @@ function createLocalStorage(req, res) {
 
   console.log("LOG: local storage created: ", dir)
 
-  fs.mkdirSync(dir)
-  // if (!fs.existsSync(dir)) {
-  //   fs.mkdirSync(dir)
-  // }
+
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
   // const dir2 =
   //   "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/local-storage"
 
@@ -97,9 +97,9 @@ function moveVideoFiles(projectId, repoId) {
       "/Users/bubz/Developer/master-project/aolme-backend/project/" +
       projectId +
       "/local-storage" // Destination folder */
-    const sourceFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/videos" // Source folder  
+    const sourceFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/videos" // Source folder  
     
-    const destinationFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage" // Destination folder
+    const destinationFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage" // Destination folder
     
     
 

@@ -1,5 +1,6 @@
 const uploadFile = require("../middleware/upload")
 const fs = require("fs")
+const { type } = require("os")
 const xlsx = require("xlsx")
 
 //const num = 20190221
@@ -46,8 +47,8 @@ const convertXlsx = (req, res) => {
   
 
   //Extract the data from the xlsx file
-  const projectId = req.params.project_id
-  console.log("projectID: ", projectId)
+  const repoId = req.params.repo_id
+  console.log("repoId: ", repoId)
   function getDataXlsx() {
     let file
     let fileArr = []
@@ -95,7 +96,7 @@ const convertXlsx = (req, res) => {
         ) */
         
         file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/ground-truth-raw/gt-ty-30fps.xlsx")
+          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
         break
 
@@ -110,7 +111,7 @@ const convertXlsx = (req, res) => {
         ) */
         
         file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/ground-truth-raw/gt-ty-30fps.xlsx")
+          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
         break 
 
@@ -126,7 +127,7 @@ const convertXlsx = (req, res) => {
         ) */
         
         file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/ground-truth-raw/gt-ty-30fps.xlsx")
+          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
         break 
       
@@ -141,7 +142,7 @@ const convertXlsx = (req, res) => {
         ) */
         
         file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/ground-truth-raw/gt-ty-30fps.xlsx")
+          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
         break 
 
@@ -157,7 +158,7 @@ const convertXlsx = (req, res) => {
         ) */
         
         file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/ground-truth-raw/gt-ty-30fps.xlsx")
+          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
         break 
 
@@ -172,7 +173,7 @@ const convertXlsx = (req, res) => {
         ) */
         
         file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/ground-truth-raw/gt-ty-30fps.xlsx")
+          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
         break
 
@@ -187,13 +188,13 @@ const convertXlsx = (req, res) => {
         ) */
         
         file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/ground-truth-raw/gt-ty-30fps.xlsx")
+          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
         break
         
       default:
         file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/ground-truth-raw/gt-ty-30fps.xlsx")
+          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
         break
     }
 
@@ -288,128 +289,139 @@ const convertXlsx = (req, res) => {
     return labelSequence
   }
 
-  function buildValueObject(sequence, label, index) {
+  function buildValueObject(sequence, label, index, i) {
 
     let frames = 0
     let duration = 0
-    switch(num){
+    console.log("index: ", index + " == " + typeof(index))
+    console.log("i: ", i+ " == " + typeof(i))
+    console.log("num: ", num+ " == " + typeof(num))
+
+
+    switch(parseInt(num)){
       case 20170330:
-        if(index === 0){
-          frames = 57930
-          duration = 966.4655
-        } else if (index === 1){
-          frames = 57930
-          duration = 966.4655
-        } else if (index === 2){
-          frames = 57930
-          duration = 966.4655
-        } else if (index === 3){
-          frames = 57930
-          duration = 966.4655
-        } else if (index === 4){
-          frames = 57930
-          duration = 966.4655
-        } else if (index === 5){
+    
           frames = 56460
           duration = 941.9410
-        }
+        /* else if (i === 1){
+          frames = 57930
+          duration = 966.4655
+        } else if (i === 2){
+          frames = 57930
+          duration = 966.4655
+        } else if (i === 3){
+          frames = 57930
+          duration = 966.4655
+        } else if (i === 4){
+          frames = 57930
+          duration = 966.4655
+        } else if (i === 5){
+          frames = 56460
+          duration = 941.9410
+        } */
     
         break
 
       case 20170413:
-        if(index === 0){
+        if(i === 0){
           frames = 57990
           duration = 967.4665
-        } else if (index === 1){
+        } else if (i === 1){
           frames = 58020
           duration = 967.9670
-        } else if (index === 2){
+        } else if (i === 2){
           frames = 58020
           duration = 967.9670
-        } else if (index === 3){
+        } else if (i === 3){
           frames = 23820
           duration = 397.3970
         } 
         break;
 
       case 20170302:
-        if(index === 0){
+        if(i === 0){
           frames = 24504
           duration = 816.800000
-        } else if (index === 1){
+        } else if (i === 1){
           frames = 24502
           duration = 816.733333
-        } else if (index === 2){
+        } else if (i === 2){
           frames = 9
           duration = 0.300000
         }
         break;
 
       case 20180223:
-        if(index === 0){
+        if(i === 0){
           frames = 42720
           duration = 1425.424
-        } else if (index === 1){
+        } else if (i === 1){
           frames = 42720
           duration = 1425.424
-        } else if (index === 2){
+        } else if (i === 2){
           frames = 42720
           duration = 1425.424
-        } else if (index === 3){
+        } else if (i === 3){
           frames = 42720
           duration = 1425.424
-        } else if (index === 4){
+        } else if (i === 4){
           frames = 11790
           duration = 393.393
         } 
         break;
 
       case 20180308:
-        if(index === 0){
+        if(i === 0){
           frames = 42720
           duration = 1425.4240
-        } else if (index === 1){
+        } else if (i === 1){
           frames = 42720
           duration = 1425.4240
-        } else if (index === 2){
+        } else if (i === 2){
           frames = 42720
           duration = 1425.4240
-        } else if (index === 3){
+        } else if (i === 3){
           frames = 20715
           duration = 691.1905
         } 
         break;
 
       case 20190411:
-        if(index === 0){
+        if(i === 0){
           frames = 42720
           duration = 1425.424
-        } else if (index === 1){
+        } else if (i === 1){
           frames = 42720
           duration = 1425.424
         } 
         break;
 
       case 20190221:
-        if(index === 0){
+        if(i === 0){
           frames = 42735
           duration = 1425.9245
-        } else if (index === 1){
+        } else if (i === 1){
           frames = 42735
           duration = 1425.9245
-        } else if (index === 2){
+        } else if (i === 2){
           frames = 42735
           duration = 1425.9245
-        } else if (index === 3){
+        } else if (i === 3){
           frames = 42735
           duration = 1425.9245
-        } else if (index === 4){
+        } else if (i === 4){
           frames = 19890
           duration = 663.6630
         } 
         break;
+      
+      default:
+        console.log("THE DEFAULT CASE")
+        break;
     }
 
+    console.log("frames: ", frames)
+    console.log("duration: ", duration)
 
     const value = {
       framesCount: frames,
@@ -417,6 +429,7 @@ const convertXlsx = (req, res) => {
       labels: [label],
       sequence: sequence,
     }
+    //console.log("value: ", value)
 
     return value
   }
@@ -494,8 +507,8 @@ const convertXlsx = (req, res) => {
     return resultElement
   }
 
-  function buildResult(uniqueLabels, sequence, index) {
-    const value = buildValueObject(sequence, uniqueLabels[index])
+  function buildResult(uniqueLabels, sequence, index, i) {
+    const value = buildValueObject(sequence, uniqueLabels[index], i)
 
     const resultElement = buildResultElementObject(value, uniqueLabels[index])
 
@@ -515,7 +528,7 @@ const convertXlsx = (req, res) => {
   function createTaskArray(annotations, index) {
     let video
 
-    if (num === 1) {
+    /* if (num === 1) {
       switch (index) {
         case 0:
           video = "/data/upload/30/bd1ea630-G-C1L1P-Apr13-C-Windy_q2_01-07.mp4"
@@ -567,73 +580,73 @@ const convertXlsx = (req, res) => {
           video = "/data/upload/31/04072f67-G-C3L1P-Feb21-D-Ivonne_q2_05-05.mp4"
           break
       }
-    }
+    } */
 
-    if (num === 20170330){
+    if (parseInt(num) === 20170330){
       switch (index) {
-        case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Mar30-C-Kelly_q2_01-06.mp4"
+        /* case 0:
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_01-06.mp4"
           break
         
         case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Mar30-C-Kelly_q2_02-06.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_02-06.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Mar30-C-Kelly_q2_03-06.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_03-06.mp4"
           break
 
         case 3:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Mar30-C-Kelly_q2_04-06.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_04-06.mp4"
           break
 
         case 4:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Mar30-C-Kelly_q2_05-06.mp4"
-          break
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_05-06.mp4"
+          break */
 
-        case 5:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Mar30-C-Kelly_q2_06-06.mp4"
+        case 0:
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_06-06.mp4"
           break
         
         default:
           break;
       }
 
-    } else if (num === 20170413){
+    } else if (parseInt(num) === 20170413){
       
       switch (index) {
       case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Apr13-C-Windy_q2_03-07.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Apr13-C-Windy_q2_03-07.mp4"
           break
 
       case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Apr13-C-Windy_q2_05-07.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Apr13-C-Windy_q2_05-07.mp4"
           break
 
       case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Apr13-C-Windy_q2_06-07.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Apr13-C-Windy_q2_06-07.mp4"
           break
 
       case 3:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Apr13-C-Windy_q2_07-07.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Apr13-C-Windy_q2_07-07.mp4"
           break
 
       }
-    } else if (num === 20170302){
+    } else if (parseInt(num) === 20170302){
 
       switch(index){
 
 
         case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Mar02-E-Irma_q2_01-08.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar02-E-Irma_q2_01-08.mp4"
           break
 
         case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Mar02-E-Irma_q2_02-08.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar02-E-Irma_q2_02-08.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C1L1P-Mar02-E-Irma_q2_03-08.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar02-E-Irma_q2_03-08.mp4"
           break
 
         default:
@@ -643,28 +656,28 @@ const convertXlsx = (req, res) => {
         
 
 
-    } else if (num === 20180223){
+    } else if (parseInt(num) === 20180223){
 
       switch(index){
 
         case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C2L1P-Feb23-B-Shelby_q2_02-06.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Feb23-B-Shelby_q2_02-06.mp4"
           break
 
         case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C2L1P-Feb23-B-Shelby_q2_03-06.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Feb23-B-Shelby_q2_03-06.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C2L1P-Feb23-B-Shelby_q2_04-06.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Feb23-B-Shelby_q2_04-06.mp4"
           break
 
         case 3:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C2L1P-Feb23-B-Shelby_q2_05-06.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Feb23-B-Shelby_q2_05-06.mp4"
           break
 
         case 4:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C2L1P-Feb23-B-Shelby_q2_06-06.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Feb23-B-Shelby_q2_06-06.mp4"
           break
 
    
@@ -672,24 +685,24 @@ const convertXlsx = (req, res) => {
           break;
       }
 
-    } else if (num === 20180308){
+    } else if (parseInt(num) === 20180308){
 
       switch(index){
         
         case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_02-05.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_02-05.mp4"
           break
 
         case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_03-05.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_03-05.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_04-05.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_04-05.mp4"
           break
 
         case 3:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_05-05.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_05-05.mp4"
           break
 
         
@@ -700,48 +713,50 @@ const convertXlsx = (req, res) => {
       }
 
 
-    } else if (num === 20190411){
+    } else if (parseInt(num) === 20190411){
       
       switch(index){
 
         case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
           break
 
         case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
           break
         default:
           break;
       }
 
-    } else if (num === 20190221){
+    } else if (parseInt(num) === 20190221){
       switch(index){
 
         case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_01-05.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_01-05.mp4"
           break
 
         case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_02-05.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_02-05.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_03-05.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_03-05.mp4"
           break
 
         case 3:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_04-05.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_04-05.mp4"
           break
 
         case 4:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_05-05.mp4"
+          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_05-05.mp4"
           break
 
         default:
           break;
       }
     }
+
+    console.log("num: " + num + " index: " + index + " video: " + video)
 
     if (num === 101) {
       switch (index) {
@@ -837,7 +852,7 @@ const convertXlsx = (req, res) => {
 
   const result = labelSequence.map((allFileSequences, index) => {
     return allFileSequences.map((sequence, childIndex) =>
-      buildResult(uniqueLabelsArr[index], sequence, childIndex)
+      buildResult(uniqueLabelsArr[index], sequence, childIndex, index)
     )
   })
 
@@ -850,7 +865,7 @@ const convertXlsx = (req, res) => {
   console.log("here 10")
 
   const uploadedFile = tasks.map((task, index) =>
-    createFile(task, uniqueVideos[index])
+    createFile(task, uniqueVideos[index], repoId)
   )
   console.log(uniqueLabelsArr)
   console.log("here 11")
@@ -896,7 +911,7 @@ const download = (req, res) => {
   })
 }
 
-const createFile = (data, filename) => {
+const createFile = (data, filename, repoId) => {
   const file = filename.split(".")
 
   data = JSON.stringify(data)
@@ -905,7 +920,7 @@ const createFile = (data, filename) => {
     file[0] +
     ".json" */
 
-    const path = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/ground-truth-reformat/"+file[0]+".json" 
+    const path = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-reformat/"+file[0]+".json" 
   fs.writeFile(path, data, (err) => {
     if (err) {
       console.error(err)
