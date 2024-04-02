@@ -4,3 +4,4 @@ package-lock.json
 uploads/*
 videos/*
 .DS_Store
+*.rest
