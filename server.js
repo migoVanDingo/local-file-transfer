@@ -1,6 +1,7 @@
 const cors = require("cors")
 const express = require("express")
 const app = express()
+const bodyParser = require("body-parser")
 
 global.__basedir = __dirname
 
@@ -9,6 +10,9 @@ app.use(
     origin: "*",
   })
 )
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Origin','*');
     res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
