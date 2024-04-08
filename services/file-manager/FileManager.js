@@ -26,11 +26,14 @@ function createLocalStorage(req, res) {
 function moveFilesToLocalStorage(req, res) {
   console.log("here guy")
   try {
-    console.log("Start Move Files to Local Storage: ", req.params.projectId)
-    console.log("Start Move Files to Local Storage rid: ", req.params.repoId)
+    console.log("Start Move Files to Local Storage -- entity_id: ", req.params.entity_id)
+    console.log("Start Move Files to Local Storage -- dataset_id: ", req.params.dataset_id)
+    console.log("Start Move Files to Local Storage -- subset_id: ", req.params.subset_id)
+    console.log("Start Move Files to Local Storage -- project_id: ", req.params.project_id)
+    console.log("Start Move Files to Local Storage -- file_set_id: ", req.params.file_set_id)
 
     //const destinationFolder = moveGroundTruthFiles(req.params.projectId)
-    const destinationFolder = moveVideoFiles(req.params.projectId, req.params.repoId)
+    const destinationFolder = moveVideoFiles(req.params.entity_id, req.params.dataset_id, req.params.subset_id, req.params.project_id, req.params.file_set_id)
     res.status(200).send(JSON.stringify({ destination: destinationFolder }))
   } catch (error) {
     console.error(error)
@@ -86,7 +89,7 @@ function moveGroundTruthFiles(projectId) {
   }
 }
 
-function moveVideoFiles(projectId, repoId) {
+function moveVideoFiles(entityId, datasetId, subsetId) {
   try {
     console.log("moveVideoFiles()")
     /* const sourceFolder =
@@ -97,9 +100,15 @@ function moveVideoFiles(projectId, repoId) {
       "/Users/bubz/Developer/master-project/aolme-backend/project/" +
       projectId +
       "/local-storage" // Destination folder */
-    const sourceFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/videos" // Source folder  
+
+
+    /* MOST RECENT ---> const sourceFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/videos" // Source folder  
     
-    const destinationFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage" // Destination folder
+    const destinationFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage"  */// Destination folder
+
+    const sourceFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/"+entityId+"/dataset/"+datasetId+"/subset/"+subsetId+"/files" // Source folder
+
+    const destinationFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/"+entityId+"/dataset/"+datasetId+"/subset/"+subsetId+"/local-storage" // Destination folder
     
     
 

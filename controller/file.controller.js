@@ -41,75 +41,39 @@ const doTest = (req, res) => {
     return res.status(400).send("No data")
   }
 }
+
+
 const convertXlsx = (req, res) => {
   const num = req.params.file_set_id
   console.log("numNUM: ", num)
+
+  const entityId = req.params.entity_id
+  const datasetId = req.params.dataset_id
+  const subsetId = req.params.subset_id
+  
+  const subsetPath = "/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/"+entityId+"/dataset/"+datasetId+"/subset/"+subsetId
   
 
   //Extract the data from the xlsx file
-  const repoId = req.params.repo_id
-  console.log("repoId: ", repoId)
+
+
   function getDataXlsx() {
     let file
     let fileArr = []
 
-    switch (num) {
-      case 1:
-        file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/local-file-transfer/uploads/talking_instances.xlsx"
-        )
-        break
-
-      case 3:
-        file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/local-file-transfer/uploads/ivonne-typing/ivone-typing.xlsx"
-        )
-        break
-
-      case 101:
-        
-        getFiles = fs.readdir(
-          "/Users/bubz/Developer/master-project/aolme-backend/project/" +
-            projectId +
-            "/ground-truth-raw",
-          (err, files) => {
-            if(err)
-              console.error("It didn't work: ", err)
-              fileArr.push(files.map(file => file))
-          }
-        )
-        
-        file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/aolme-backend/project/" +
-            projectId +
-            "/ground-truth-raw/gt-ty-30fps.xlsx")
+   /*  switch (num) {
+      
 
       // FILES FOR TESTING
       case 20170330:
-        /* getFiles = fs.readdir(
-          "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-C/20170330",
-          (err, files) => {
-            if(err)
-              console.error("It didn't work: ", err)
-              fileArr.push(files.map(file => file))
-          }
-        ) */
-        
+
         file = xlsx.readFile(
-          "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
+          "/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/"+entityId+"/dataset/"+datasetId+"/subset/"+subsetId+"/xlsx/gt-ty-30fps.xlsx")
       
         break
 
       case 20170413:
-        /* getFiles = fs.readdir(
-          "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-C/20170413",
-          (err, files) => {
-            if(err)
-              console.error("It didn't work: ", err)
-              fileArr.push(files.map(file => file))
-          }
-        ) */
-        
+
         file = xlsx.readFile(
           "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
@@ -117,30 +81,14 @@ const convertXlsx = (req, res) => {
 
 
       case 20170302:
-        /* getFiles = fs.readdir(
-          "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-E/20170302",
-          (err, files) => {
-            if(err)
-              console.error("It didn't work: ", err)
-              fileArr.push(files.map(file => file))
-          }
-        ) */
-        
+
         file = xlsx.readFile(
           "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
         break 
       
       case 20180223:
-        /* getFiles = fs.readdir(
-          "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C2L1P-B/20180223",
-          (err, files) => {
-            if(err)
-              console.error("It didn't work: ", err)
-              fileArr.push(files.map(file => file))
-          }
-        ) */
-        
+   
         file = xlsx.readFile(
           "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
@@ -148,45 +96,21 @@ const convertXlsx = (req, res) => {
 
 
       case 20180308:
-        /* getFiles = fs.readdir(
-          "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C2L1P-D/20180308",
-          (err, files) => {
-            if(err)
-              console.error("It didn't work: ", err)
-              fileArr.push(files.map(file => file))
-          }
-        ) */
-        
+      
         file = xlsx.readFile(
           "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
         break 
 
       case 20190411:
-        /* getFiles = fs.readdir(
-          "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C3L1P-C/20190411",
-          (err, files) => {
-            if(err)
-              console.error("It didn't work: ", err)
-              fileArr.push(files.map(file => file))
-          }
-        ) */
-        
+  
         file = xlsx.readFile(
           "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
         break
 
       case 20190221:
-        /* getFiles = fs.readdir(
-          "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C3L1P-D/20190221",
-          (err, files) => {
-            if(err)
-              console.error("It didn't work: ", err)
-              fileArr.push(files.map(file => file))
-          }
-        ) */
-        
+
         file = xlsx.readFile(
           "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
       
@@ -196,9 +120,15 @@ const convertXlsx = (req, res) => {
         file = xlsx.readFile(
           "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
         break
-    }
+    } */
 
-    
+    file = xlsx.readFile(subsetPath+"/xlsx/gt-ty-30fps.xlsx")
+
+    /* const xlsxPath = "/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/"+entityId+"/dataset/"+datasetId+"/subset/"+subsetId
+
+    const files = fs.readdirSync(xlsxPath).map(fileName => {
+        return path.join(xlsxPath, fileName)
+      }) */
    
     const sheetNames = file.SheetNames
     const totalSheets = sheetNames.length
@@ -293,32 +223,23 @@ const convertXlsx = (req, res) => {
 
     let frames = 0
     let duration = 0
+    if(i === undefined)
+      i = index
+
+    let val = parseInt(num)
+
     console.log("index: ", index + " == " + typeof(index))
     console.log("i: ", i+ " == " + typeof(i))
-    console.log("num: ", num+ " == " + typeof(num))
+    console.log("num: ", val+ " == " + typeof(val))
 
+    
 
-    switch(parseInt(num)){
+    
+    switch(val){
       case 20170330:
     
           frames = 56460
           duration = 941.9410
-        /* else if (i === 1){
-          frames = 57930
-          duration = 966.4655
-        } else if (i === 2){
-          frames = 57930
-          duration = 966.4655
-        } else if (i === 3){
-          frames = 57930
-          duration = 966.4655
-        } else if (i === 4){
-          frames = 57930
-          duration = 966.4655
-        } else if (i === 5){
-          frames = 56460
-          duration = 941.9410
-        } */
     
         break
 
@@ -429,7 +350,6 @@ const convertXlsx = (req, res) => {
       labels: [label],
       sequence: sequence,
     }
-    //console.log("value: ", value)
 
     return value
   }
@@ -478,23 +398,6 @@ const convertXlsx = (req, res) => {
 
     let id = makeid(10)
 
-    /* switch(num){
-        case 1:
-            id = idArr[label]
-            break;
-        
-        case 2:
-            id = idArr2[label]
-            break;
-        
-        case 3: 
-            id = idArr3[label]
-            break;
-
-        default:
-            break
-    } */
-
     const resultElement = {
       id: id,
       from_name: "box",
@@ -528,84 +431,12 @@ const convertXlsx = (req, res) => {
   function createTaskArray(annotations, index) {
     let video
 
-    /* if (num === 1) {
-      switch (index) {
-        case 0:
-          video = "/data/upload/30/bd1ea630-G-C1L1P-Apr13-C-Windy_q2_01-07.mp4"
-          break
-
-        case 1:
-          video = "/data/upload/30/e5fbc3dd-G-C1L1P-Apr13-C-Windy_q2_02-07.mp4"
-          break
-
-        case 2:
-          video = "/data/upload/30/0a0cbfc9-G-C1L1P-Apr13-C-Windy_q2_03-07.mp4"
-          break
-
-        case 3:
-          video = "/data/upload/30/1ead0ba6-G-C1L1P-Apr13-C-Windy_q2_04-07.mp4"
-          break
-
-        case 4:
-          video = "/data/upload/30/fc9fbcb1-G-C1L1P-Apr13-C-Windy_q2_05-07.mp4"
-          break
-
-        case 5:
-          video = "/data/upload/30/31c1cd68-G-C1L1P-Apr13-C-Windy_q2_06-07.mp4"
-          break
-
-        case 6:
-          video = "/data/upload/30/3bd7c439-G-C1L1P-Apr13-C-Windy_q2_07-07.mp4"
-          break
-      }
-    } else {
-      switch (index) {
-        case 0:
-          video = "/data/upload/31/0f94a9d5-G-C3L1P-Feb21-D-Ivonne_q2_01-05.mp4"
-          break
-
-        case 1:
-          video = "/data/upload/31/55f9af10-G-C3L1P-Feb21-D-Ivonne_q2_02-05.mp4"
-          break
-
-        case 2:
-          video = "/data/upload/31/26f534c9-G-C3L1P-Feb21-D-Ivonne_q2_03-05.mp4"
-          break
-
-        case 3:
-          video = "/data/upload/31/234b0bdc-G-C3L1P-Feb21-D-Ivonne_q2_04-05.mp4"
-          break
-
-        case 4:
-          video = "/data/upload/31/04072f67-G-C3L1P-Feb21-D-Ivonne_q2_05-05.mp4"
-          break
-      }
-    } */
-
     if (parseInt(num) === 20170330){
       switch (index) {
-        /* case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_01-06.mp4"
-          break
-        
-        case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_02-06.mp4"
-          break
-
-        case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_03-06.mp4"
-          break
-
-        case 3:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_04-06.mp4"
-          break
-
-        case 4:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_05-06.mp4"
-          break */
+       
 
         case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar30-C-Kelly_q2_06-06.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Mar30-C-Kelly_q2_06-06.mp4"
           break
         
         default:
@@ -616,19 +447,19 @@ const convertXlsx = (req, res) => {
       
       switch (index) {
       case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Apr13-C-Windy_q2_03-07.mp4"
+          video =  "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Apr13-C-Windy_q2_03-07.mp4"
           break
 
       case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Apr13-C-Windy_q2_05-07.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Apr13-C-Windy_q2_05-07.mp4"
           break
 
       case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Apr13-C-Windy_q2_06-07.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Apr13-C-Windy_q2_06-07.mp4"
           break
 
       case 3:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Apr13-C-Windy_q2_07-07.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Apr13-C-Windy_q2_07-07.mp4"
           break
 
       }
@@ -638,15 +469,15 @@ const convertXlsx = (req, res) => {
 
 
         case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar02-E-Irma_q2_01-08.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Mar02-E-Irma_q2_01-08.mp4"
           break
 
         case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar02-E-Irma_q2_02-08.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Mar02-E-Irma_q2_02-08.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C1L1P-Mar02-E-Irma_q2_03-08.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Mar02-E-Irma_q2_03-08.mp4"
           break
 
         default:
@@ -661,23 +492,23 @@ const convertXlsx = (req, res) => {
       switch(index){
 
         case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Feb23-B-Shelby_q2_02-06.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_02-06.mp4"
           break
 
         case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Feb23-B-Shelby_q2_03-06.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_03-06.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Feb23-B-Shelby_q2_04-06.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_04-06.mp4"
           break
 
         case 3:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Feb23-B-Shelby_q2_05-06.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_05-06.mp4"
           break
 
         case 4:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Feb23-B-Shelby_q2_06-06.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_06-06.mp4"
           break
 
    
@@ -688,21 +519,25 @@ const convertXlsx = (req, res) => {
     } else if (parseInt(num) === 20180308){
 
       switch(index){
-        
-        case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_02-05.mp4"
-          break
 
+        case 0:
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_01-05.mp4"
+          break
+        
         case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_03-05.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_02-05.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_04-05.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_03-05.mp4"
           break
 
         case 3:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_05-05.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_04-05.mp4"
+          break
+
+        case 4:
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_05-05.mp4"
           break
 
         
@@ -718,11 +553,11 @@ const convertXlsx = (req, res) => {
       switch(index){
 
         case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
           break
 
         case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
           break
         default:
           break;
@@ -732,23 +567,23 @@ const convertXlsx = (req, res) => {
       switch(index){
 
         case 0:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_01-05.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_01-05.mp4"
           break
 
         case 1:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_02-05.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_02-05.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_03-05.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_03-05.mp4"
           break
 
         case 3:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_04-05.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_04-05.mp4"
           break
 
         case 4:
-          video = "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_05-05.mp4"
+          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_05-05.mp4"
           break
 
         default:
@@ -758,44 +593,7 @@ const convertXlsx = (req, res) => {
 
     console.log("num: " + num + " index: " + index + " video: " + video)
 
-    if (num === 101) {
-      switch (index) {
-        case 0:
-          video =
-            "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/project/" +
-            projectId +
-            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_02-06.mp4"
-          break
-
-        case 1:
-          video =
-            "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/project/" +
-            projectId +
-            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_03-06.mp4"
-          break
-
-        case 2:
-          video =
-            "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/project/" +
-            projectId +
-            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_04-06.mp4"
-          break
-
-        case 3:
-          video =
-            "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/project/" +
-            projectId +
-            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_05_06.mp4"
-          break
-
-        case 4:
-          video =
-            "/data/local-files/?d=/Users/bubz/Developer/master-project/aolme-backend/project/" +
-            projectId +
-            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_06-06.mp4"
-          break
-      }
-    }
+    
 
     const task = {
       data: {
@@ -865,7 +663,7 @@ const convertXlsx = (req, res) => {
   console.log("here 10")
 
   const uploadedFile = tasks.map((task, index) =>
-    createFile(task, uniqueVideos[index], repoId)
+    createFile(task, uniqueVideos[index], subsetPath)
   )
   console.log(uniqueLabelsArr)
   console.log("here 11")
@@ -911,7 +709,7 @@ const download = (req, res) => {
   })
 }
 
-const createFile = (data, filename, repoId) => {
+const createFile = (data, filename, subsetPath) => {
   const file = filename.split(".")
 
   data = JSON.stringify(data)
@@ -920,7 +718,7 @@ const createFile = (data, filename, repoId) => {
     file[0] +
     ".json" */
 
-    const path = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-reformat/"+file[0]+".json" 
+    const path = subsetPath + "/ground-truth-raw/"+file[0]+".json" 
   fs.writeFile(path, data, (err) => {
     if (err) {
       console.error(err)

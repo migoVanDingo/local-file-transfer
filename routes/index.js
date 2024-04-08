@@ -14,9 +14,13 @@ let routes = (app) => {
     router.get('/health-check', util.healthCheck)
 
     router.get('/local-storage/:projectId/:repoId', FileManager.createLocalStorage)
-    router.get('/local-storage/:projectId/move/:repoId', FileManager.moveFilesToLocalStorage)
+    //router.get('/local-storage/:projectId/move/:repoId', FileManager.moveFilesToLocalStorage)
+
+    router.get('/local-storage/entity/:entity_id/dataset/:dataset_id/subset/:subset_id/move', FileManager.moveFilesToLocalStorage)
 
     router.get('/convert/v2/xlsx', controller.convertXlsx)
+
+    router.get('/convert/xlsx/entity/:entity_id/dataset/:dataset_id/subset/:subset_id/file_set_id/:file_set_id', controller.convertXlsx)
 
     app.use(router)
 }
