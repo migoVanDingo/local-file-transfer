@@ -35,13 +35,12 @@ const upload = async (req, res) => {
 const doTest = (req, res) => {
   const data = req.query.id
   console.log("Req.body oy: ", data)
-  if(data){
+  if (data) {
     return res.status(200).send(JSON.stringify(data))
   } else {
     return res.status(400).send("No data")
   }
 }
-
 
 const convertXlsx = (req, res) => {
   const num = req.params.file_set_id
@@ -50,18 +49,22 @@ const convertXlsx = (req, res) => {
   const entityId = req.params.entity_id
   const datasetId = req.params.dataset_id
   const subsetId = req.params.subset_id
-  
-  const subsetPath = "/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/"+entityId+"/dataset/"+datasetId+"/subset/"+subsetId
-  
+
+  const subsetPath =
+    "/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/" +
+    entityId +
+    "/dataset/" +
+    datasetId +
+    "/subset/" +
+    subsetId
 
   //Extract the data from the xlsx file
-
 
   function getDataXlsx() {
     let file
     let fileArr = []
 
-   /*  switch (num) {
+    /*  switch (num) {
       
 
       // FILES FOR TESTING
@@ -120,16 +123,35 @@ const convertXlsx = (req, res) => {
         file = xlsx.readFile(
           "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/ground-truth-raw/gt-ty-30fps.xlsx")
         break
+
+        
+    Irma
+    Marios
+    Jorge    
+    Jacinto
+    Emilio   
+    Juan
+    Herminio
+
     } */
 
-    file = xlsx.readFile(subsetPath+"/xlsx/gt-ty-30fps.xlsx")
 
+    let pathToFileOrDir 
+    if (fs.existsSync(subsetPath + "/xlsx/gt-ty-30fps.xlsx")) {
+      pathToFileOrDir = subsetPath + "/xlsx/gt-ty-30fps.xlsx"
+    } else if(fs.existsSync(subsetPath + "/xlsx/talking_instances.xlsx")) {
+      pathToFileOrDir = subsetPath + "/xlsx/talking_instances.xlsx"
+    } else if (fs.existsSync(subsetPath + "/xlsx/gt-wr-30fps.xlsx")){
+      pathToFileOrDir = subsetPath + "/xlsx/gt-wr-30fps.xlsx"
+    }
+    file = xlsx.readFile(pathToFileOrDir)
+    
     /* const xlsxPath = "/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/"+entityId+"/dataset/"+datasetId+"/subset/"+subsetId
 
     const files = fs.readdirSync(xlsxPath).map(fileName => {
         return path.join(xlsxPath, fileName)
       }) */
-   
+
     const sheetNames = file.SheetNames
     const totalSheets = sheetNames.length
     console.log("totalSheets: ", totalSheets)
@@ -220,125 +242,207 @@ const convertXlsx = (req, res) => {
   }
 
   function buildValueObject(sequence, label, index, i) {
-
     let frames = 0
     let duration = 0
-    if(i === undefined)
-      i = index
+    if (i === undefined) i = index
 
     let val = parseInt(num)
 
-    console.log("index: ", index + " == " + typeof(index))
-    console.log("i: ", i+ " == " + typeof(i))
-    console.log("num: ", val+ " == " + typeof(val))
+    console.log("index: ", index + " == " + typeof index)
+    console.log("i: ", i + " == " + typeof i)
+    console.log("num: ", val + " == " + typeof val)
 
-    
-
-    
-    switch(val){
+    switch (val) {
       case 20170330:
-    
-          frames = 56460
-          duration = 941.9410
-    
+        frames = 56460
+        duration = 941.941
+
         break
 
       case 20170413:
-        if(i === 0){
+        if (i === 0) {
           frames = 57990
           duration = 967.4665
-        } else if (i === 1){
+        } else if (i === 1) {
           frames = 58020
-          duration = 967.9670
-        } else if (i === 2){
+          duration = 967.967
+        } else if (i === 2) {
           frames = 58020
-          duration = 967.9670
-        } else if (i === 3){
+          duration = 967.967
+        } else if (i === 3) {
           frames = 23820
-          duration = 397.3970
-        } 
-        break;
+          duration = 397.397
+        }
+        break
 
       case 20170302:
-        if(i === 0){
-          frames = 24504
-          duration = 816.800000
-        } else if (i === 1){
-          frames = 24502
-          duration = 816.733333
-        } else if (i === 2){
-          frames = 9
-          duration = 0.300000
+/* 
+      // Writing
+        if (i === 0) {
+          frames = 20421
+          duration = 680.75902
+        } else if (i === 1) {
+          frames = 20422
+          duration = 680.75902
         }
-        break;
+        else if (i === 2) {
+          frames = 20421
+          duration = 680.75902
+        }
+        else if (i === 3) {
+          frames = 10181
+          duration = 339.35102
+        } */
+        
+        //Typing and Talking
+        if (i === 0) {
+          frames = 20423
+          duration = 680.75902
+        } else if (i === 1) {
+          frames = 20421
+          duration = 680.75902
+        } else if (i === 2) {
+          frames = 20421
+          duration = 680.75902
+        }
+        else if (i === 3) {
+          frames = 20421
+          duration = 680.75902
+        }
+        else if (i === 4) {
+          frames = 20421
+          duration = 680.75902
+        }
+        else if (i === 5) {
+          frames = 20422
+          duration = 680.75902
+        }
+        else if (i === 6) {
+          frames = 20421
+          duration = 680.75902
+        }
+        else if (i === 7) {
+          frames = 10181
+          duration = 339.35102
+        }
+        
+        // #1
+        let video1 = {
+          title: "G-C1L1P-Mar02-E-Irma_q2_01-08.mp4",
+          framesCount: 20423,
+          duration: 680.75902,
+        }
+        // #2
+        let video2 = {
+          title: "G-C1L1P-Mar02-E-Irma_q2_02-08.mp4",
+          framesCount:20421,
+          duration:680.69502
+        }
+        // #3
+        let video3 = {
+          title: "G-C1L1P-Mar02-E-Irma_q2_03-08.mp4",
+          framesCount:20421,
+          duration:680.69502
+        }
+        // #4
+        let video4 = {
+          title: "G-C1L1P-Mar02-E-Irma_q2_04-08.mp4",
+          framesCount:20421,
+          duration:680.69502
+        }
+        // #5
+        let video5 = {
+          title: "G-C1L1P-Mar02-E-Irma_q2_05-08.mp4",
+          framesCount:20421,
+          duration:680.69502
+        }
+        // #6
+        let video6 = {
+          title: "G-C1L1P-Mar02-E-Irma_q2_06-08.mp4",
+          framesCount:20422,
+          duration:680.72702
+        }
+        // #7
+        let video7 = {
+          title: "G-C1L1P-Mar02-E-Irma_q2_07-08.mp4",
+          framesCount: 20421,
+          duration: 680.75902,
+        }
+        // #8
+        let video8 = {
+          title: "G-C1L1P-Mar02-E-Irma_q2_08-08.mp4",
+          framesCount:10181,
+          duration:339.35102
+        }
+        break
 
       case 20180223:
-        if(i === 0){
+        if (i === 0) {
           frames = 42720
           duration = 1425.424
-        } else if (i === 1){
+        } else if (i === 1) {
           frames = 42720
           duration = 1425.424
-        } else if (i === 2){
+        } else if (i === 2) {
           frames = 42720
           duration = 1425.424
-        } else if (i === 3){
+        } else if (i === 3) {
           frames = 42720
           duration = 1425.424
-        } else if (i === 4){
+        } else if (i === 4) {
           frames = 11790
           duration = 393.393
-        } 
-        break;
+        }
+        break
 
       case 20180308:
-        if(i === 0){
+        if (i === 0) {
           frames = 42720
-          duration = 1425.4240
-        } else if (i === 1){
+          duration = 1425.424
+        } else if (i === 1) {
           frames = 42720
-          duration = 1425.4240
-        } else if (i === 2){
+          duration = 1425.424
+        } else if (i === 2) {
           frames = 42720
-          duration = 1425.4240
-        } else if (i === 3){
+          duration = 1425.424
+        } else if (i === 3) {
           frames = 20715
           duration = 691.1905
-        } 
-        break;
+        }
+        break
 
       case 20190411:
-        if(i === 0){
+        if (i === 0) {
           frames = 42720
           duration = 1425.424
-        } else if (i === 1){
+        } else if (i === 1) {
           frames = 42720
           duration = 1425.424
-        } 
-        break;
+        }
+        break
 
       case 20190221:
-        if(i === 0){
+        if (i === 0) {
           frames = 42735
           duration = 1425.9245
-        } else if (i === 1){
+        } else if (i === 1) {
           frames = 42735
           duration = 1425.9245
-        } else if (i === 2){
+        } else if (i === 2) {
           frames = 42735
           duration = 1425.9245
-        } else if (i === 3){
+        } else if (i === 3) {
           frames = 42735
           duration = 1425.9245
-        } else if (i === 4){
+        } else if (i === 4) {
           frames = 19890
-          duration = 663.6630
-        } 
-        break;
-      
+          duration = 663.663
+        }
+        break
+
       default:
         console.log("THE DEFAULT CASE")
-        break;
+        break
     }
 
     console.log("frames: ", frames)
@@ -431,169 +535,278 @@ const convertXlsx = (req, res) => {
   function createTaskArray(annotations, index) {
     let video
 
-    if (parseInt(num) === 20170330){
+    if (parseInt(num) === 20170330) {
       switch (index) {
-       
-
         case 0:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Mar30-C-Kelly_q2_06-06.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar30-C-Kelly_q2_06-06.mp4"
           break
-        
-        default:
-          break;
-      }
 
-    } else if (parseInt(num) === 20170413){
-      
+        default:
+          break
+      }
+    } else if (parseInt(num) === 20170413) {
       switch (index) {
-      case 0:
-          video =  "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Apr13-C-Windy_q2_03-07.mp4"
-          break
-
-      case 1:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Apr13-C-Windy_q2_05-07.mp4"
-          break
-
-      case 2:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Apr13-C-Windy_q2_06-07.mp4"
-          break
-
-      case 3:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Apr13-C-Windy_q2_07-07.mp4"
-          break
-
-      }
-    } else if (parseInt(num) === 20170302){
-
-      switch(index){
-
-
         case 0:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Mar02-E-Irma_q2_01-08.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Apr13-C-Windy_q2_03-07.mp4"
           break
 
         case 1:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Mar02-E-Irma_q2_02-08.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Apr13-C-Windy_q2_05-07.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C1L1P-Mar02-E-Irma_q2_03-08.mp4"
-          break
-
-        default:
-          break;
-      }
-
-        
-
-
-    } else if (parseInt(num) === 20180223){
-
-      switch(index){
-
-        case 0:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_02-06.mp4"
-          break
-
-        case 1:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_03-06.mp4"
-          break
-
-        case 2:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_04-06.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Apr13-C-Windy_q2_06-07.mp4"
           break
 
         case 3:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_05-06.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Apr13-C-Windy_q2_07-07.mp4"
           break
-
-        case 4:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_06-06.mp4"
-          break
-
-   
-        default:
-          break;
       }
-
-    } else if (parseInt(num) === 20180308){
-
-      switch(index){
-
+    } else if (parseInt(num) === 20170302) {
+      switch (index) {
         case 0:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_01-05.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_01-08.mp4"
           break
-        
+
         case 1:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_02-05.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_02-08.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_03-05.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_03-08.mp4"
           break
 
         case 3:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_04-05.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_04-08.mp4"
           break
 
         case 4:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_05-05.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_05-08.mp4"
           break
 
-        
+        case 5:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_06-08.mp4"
+          break
 
+        case 6:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_07-08.mp4"
+          break
 
-        default:
-          break;
-      }
+        case 7:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_08-08.mp4"
+          break
+          
+          /* case 0:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_04-08.mp4"
+          break
 
+          case 1:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_06-08.mp4"
+          break
 
-    } else if (parseInt(num) === 20190411){
+          case 2:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_07-08.mp4"
+          break
+
+        case 3:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C1L1P-Mar02-E-Irma_q2_08-08.mp4"
+          break  */
       
-      switch(index){
-
-        case 0:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
-          break
-
-        case 1:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
-          break
         default:
-          break;
+          break
       }
-
-    } else if (parseInt(num) === 20190221){
-      switch(index){
-
+    } else if (parseInt(num) === 20180223) {
+      switch (index) {
         case 0:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_01-05.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_02-06.mp4"
           break
 
         case 1:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_02-05.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_03-06.mp4"
           break
 
         case 2:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_03-05.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_04-06.mp4"
           break
 
         case 3:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_04-05.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_05-06.mp4"
           break
 
         case 4:
-          video = "/data/local-files/?d=" + subsetPath + "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_05-05.mp4"
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C2L1P-Feb23-B-Shelby_q2_06-06.mp4"
           break
 
         default:
-          break;
+          break
+      }
+    } else if (parseInt(num) === 20180308) {
+      switch (index) {
+        case 0:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_01-05.mp4"
+          break
+
+        case 1:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_02-05.mp4"
+          break
+
+        case 2:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_03-05.mp4"
+          break
+
+        case 3:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_04-05.mp4"
+          break
+
+        case 4:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C2L1P-Mar08-D-Chaitu_q2_05-05.mp4"
+          break
+
+        default:
+          break
+      }
+    } else if (parseInt(num) === 20190411) {
+      switch (index) {
+        case 0:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
+          break
+
+        case 1:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C3L1P-Apr11-C-Phuong_q2_03-05.mp4"
+          break
+        default:
+          break
+      }
+    } else if (parseInt(num) === 20190221) {
+      switch (index) {
+        case 0:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_01-05.mp4"
+          break
+
+        case 1:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_02-05.mp4"
+          break
+
+        case 2:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_03-05.mp4"
+          break
+
+        case 3:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_04-05.mp4"
+          break
+
+        case 4:
+          video =
+            "/data/local-files/?d=" +
+            subsetPath +
+            "/local-storage/G-C3L1P-Feb21-D-Ivonne_q2_05-05.mp4"
+          break
+
+        default:
+          break
       }
     }
 
     console.log("num: " + num + " index: " + index + " video: " + video)
-
-    
 
     const task = {
       data: {
@@ -631,7 +844,7 @@ const convertXlsx = (req, res) => {
   console.log("here 2")
   const uniqueVideos = getUniqueVideos(xlFile)
   //const uniqueLabels = getUniqueLabels(xlFile)
-  console.log("here 3")
+  console.log("here 3: ", uniqueVideos)
   const videoRows = uniqueVideos.map((video) => getVideoRows(video, xlFile))
   console.log("here 4")
   const uniqueLabelsArr = videoRows.map((row) => getUniqueLabels(row))
@@ -718,7 +931,7 @@ const createFile = (data, filename, subsetPath) => {
     file[0] +
     ".json" */
 
-    const path = subsetPath + "/ground-truth-raw/"+file[0]+".json" 
+  const path = subsetPath + "/ground-truth-raw/" + file[0] + ".json"
   fs.writeFile(path, data, (err) => {
     if (err) {
       console.error(err)
@@ -731,5 +944,5 @@ module.exports = {
   getListFiles,
   download,
   convertXlsx,
-  doTest
+  doTest,
 }

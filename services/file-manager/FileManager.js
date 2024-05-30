@@ -29,11 +29,11 @@ function moveFilesToLocalStorage(req, res) {
     console.log("Start Move Files to Local Storage -- entity_id: ", req.params.entity_id)
     console.log("Start Move Files to Local Storage -- dataset_id: ", req.params.dataset_id)
     console.log("Start Move Files to Local Storage -- subset_id: ", req.params.subset_id)
-    console.log("Start Move Files to Local Storage -- project_id: ", req.params.project_id)
-    console.log("Start Move Files to Local Storage -- file_set_id: ", req.params.file_set_id)
+    /* console.log("Start Move Files to Local Storage -- project_id: ", req.params.project_id)
+    console.log("Start Move Files to Local Storage -- file_set_id: ", req.params.file_set_id) */
 
     //const destinationFolder = moveGroundTruthFiles(req.params.projectId)
-    const destinationFolder = moveVideoFiles(req.params.entity_id, req.params.dataset_id, req.params.subset_id, req.params.project_id, req.params.file_set_id)
+    const destinationFolder = moveVideoFiles(req.params.entity_id, req.params.dataset_id, req.params.subset_id)
     res.status(200).send(JSON.stringify({ destination: destinationFolder }))
   } catch (error) {
     console.error(error)
@@ -92,20 +92,7 @@ function moveGroundTruthFiles(projectId) {
 function moveVideoFiles(entityId, datasetId, subsetId) {
   try {
     console.log("moveVideoFiles()")
-    /* const sourceFolder =
-      "/Users/bubz/Developer/master-project/aolme-backend/project/" +
-      projectId +
-      "/videos" // Source folder
-    const destinationFolder =
-      "/Users/bubz/Developer/master-project/aolme-backend/project/" +
-      projectId +
-      "/local-storage" // Destination folder */
-
-
-    /* MOST RECENT ---> const sourceFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/videos" // Source folder  
-    
-    const destinationFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/"+repoId+"/local-storage"  */// Destination folder
-
+  
     const sourceFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/"+entityId+"/dataset/"+datasetId+"/subset/"+subsetId+"/files" // Source folder
 
     const destinationFolder = "/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/"+entityId+"/dataset/"+datasetId+"/subset/"+subsetId+"/local-storage" // Destination folder
@@ -122,6 +109,13 @@ function moveVideoFiles(entityId, datasetId, subsetId) {
       for (const file of files) {
         const sourceFilePath = path.join(sourceFolder, file)
         const destinationFilePath = path.join(destinationFolder, file)
+
+        if (fs.existsSync(destinationFilePath)) {
+          console.log(
+            "moveVideoFiles -- File already exists in destination folder"
+          )
+          return destinationFilePath
+        }
 
         // Use fs.promises.copyFile for direct file copying
         fs.copyFile(
